@@ -15,6 +15,22 @@ A high-performance, modern web application for searching and analyzing academic 
 
 ---
 
+## 🏛️ About Bangladesh Technical Education Board (BTEB)
+
+The **Bangladesh Technical Education Board (BTEB)** is a state regulatory board responsible for the supervision and development of technical and vocational education in Bangladesh. Established in 1967, it plays a critical role in producing skilled manpower for the nation.
+
+### Key Responsibilities:
+- **Curriculum Development**: Designing and updating curricula for various technical programs including Diploma in Engineering, Agriculture, Textile Engineering, and more.
+- **Examination Management**: Conducting public examinations and publishing results for over 73 different curricula.
+- **Accreditation**: Granting recognition to technical institutions across the country.
+
+### Official Resources:
+- **Official Website**: [bteb.gov.bd](http://bteb.gov.bd)
+- **Admission Portal**: [btebadmission.gov.bd](http://www.btebadmission.gov.bd)
+- **Results Publication**: Results are typically published as PDF files categorized by technology and semester.
+
+---
+
 ## 🛠️ System Architecture
 
 The project is built with a decoupled architecture for maximum flexibility:

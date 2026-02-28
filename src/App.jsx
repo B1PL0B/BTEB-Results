@@ -263,6 +263,48 @@ function App() {
                 </div>
               </div>
             )}
+
+            {/* BTEB Information Section */}
+            <div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center border-t border-slate-200 pt-16">
+              <div>
+                <h2 className="text-3xl font-extrabold text-slate-900 mb-6">About the Bangladesh Technical Education Board</h2>
+                <div className="space-y-4 text-slate-600 leading-relaxed">
+                  <p>
+                    The **BTEB** is the state regulatory board for technical and vocational education in Bangladesh. It oversees curriculum development, accreditation, and the examination process for over 73 technical programs.
+                  </p>
+                  <p>
+                    Students can find official circulars, semester-wise PDF results, and admission guidelines at the official BTEB portal.
+                  </p>
+                  <div className="flex gap-4 pt-4">
+                    <a href="http://bteb.gov.bd" target="_blank" rel="noreferrer" className="text-indigo-600 font-bold hover:underline flex items-center gap-1">
+                      Official Website <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    </a>
+                    <a href="http://www.btebadmission.gov.bd" target="_blank" rel="noreferrer" className="text-indigo-600 font-bold hover:underline flex items-center gap-1">
+                      Admission Portal <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-xl shadow-slate-100">
+                <h3 className="text-xl font-bold text-slate-800 mb-4">Diploma in Engineering</h3>
+                <p className="text-sm text-slate-500 mb-6 font-medium">Core Responsibilities & Standards</p>
+                <div className="space-y-4">
+                  {[
+                    "Standardized 4-year technical curriculum",
+                    "Semester-wise GPA based evaluation system",
+                    "Industrial training integration for seniors",
+                    "Nationwide certification valid for govt. sectors"
+                  ].map((item, i) => (
+                    <div key={i} className="flex gap-3 items-start">
+                      <div className="bg-indigo-50 text-indigo-600 rounded-full p-1 mt-0.5">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+                      </div>
+                      <span className="text-slate-700 font-medium">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </main>
