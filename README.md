@@ -1,4 +1,4 @@
-BTEB Student Result Finder
+## BTEB Student Result Finder
 
 A high-performance, modern web application for searching and analyzing academic results from BTEB PDF files. This tool supports searching across multiple PDF documents, viewing semester-wise performance, calculating CGPA, and downloading official-style transcripts.
 
