@@ -22,7 +22,7 @@ function App() {
     setResult(null);
 
     try {
-      const response = await fetch(`http://127.0.0.1:5000/search?roll=${roll}`);
+      const response = await fetch(`/api/search?roll=${roll}`);
       const data = await response.json();
 
       if (response.ok) {
