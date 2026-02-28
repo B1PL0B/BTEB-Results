@@ -188,6 +188,7 @@ def get_institute_name(doc, start_page, roll):
     return "Institute Not Found"
 
 @app.route('/search')
+@app.route('/api/search')
 def search():
     roll = request.args.get('roll')
     if not roll:
