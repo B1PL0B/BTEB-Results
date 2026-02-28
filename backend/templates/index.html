@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result Search | BTEB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #ec4899;
+            --bg-gradient: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(to right, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            font-size: 1.1rem;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 1.1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: white;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -10px rgba(236, 72, 153, 0.5);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Result Styles */
+        #result-area {
+            margin-top: 30px;
+            display: none;
+            text-align: left;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.passed { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
+        .badge.referred { background: rgba(234, 179, 8, 0.2); color: #facc15; }
+        .badge.failed { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+
+        .result-content {
+            font-family: 'Courier New', Courier, monospace;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #e2e8f0;
+        }
+
+        .highlight-ref {
+            color: #fb7185; /* Light Red */
+            font-weight: bold;
+        }
+
+        .spinner {
+            display: none;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto;
+        }
+
+        .error-msg {
+            color: #f87171;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="card">
+            <h1>Result Finder</h1>
+            <p class="subtitle">Enter your roll number to check your result</p>
+
+            <div class="search-box">
+                <input type="number" id="rollInput" placeholder="Ex: 601108" autocomplete="off">
+            </div>
+
+            <button id="searchBtn" onclick="searchResult()">
+                <span id="btnText">Search Result</span>
+                <div id="loadingSpinner" class="spinner"></div>
+            </button>
+
+            <div id="errorArea" class="error-msg"></div>
+
+            <div id="result-area">
+                <div class="result-header">
+                    <span id="resRoll" style="font-weight: 600; font-size: 1.1rem;"></span>
+                    <span id="resStatus" class="badge"></span>
+                </div>
+                <div id="resContent" class="result-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function searchResult() {
+            const roll = document.getElementById('rollInput').value.trim();
+            const btn = document.getElementById('searchBtn');
+            const btnText = document.getElementById('btnText');
+            const spinner = document.getElementById('loadingSpinner');
+            const errorArea = document.getElementById('errorArea');
+            const resultArea = document.getElementById('result-area');
+            const resContent = document.getElementById('resContent');
+
+            if (!roll) {
+                errorArea.textContent = "Please enter a roll number.";
+                return;
+            }
+
+            // Reset UI
+            errorArea.textContent = "";
+            resultArea.style.display = "none";
+            btn.disabled = true;
+            btnText.style.display = "none";
+            spinner.style.display = "block";
+
+            try {
+                const response = await fetch(`/search?roll=${roll}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    displayResult(data);
+                } else {
+                    errorArea.textContent = data.error || "An error occurred.";
+                }
+            } catch (err) {
+                errorArea.textContent = "Failed to connect to server.";
+            } finally {
+                btn.disabled = false;
+                btnText.style.display = "block";
+                spinner.style.display = "none";
+            }
+        }
+
+        function displayResult(data) {
+            const resultArea = document.getElementById('result-area');
+            const resRoll = document.getElementById('resRoll');
+            const resStatus = document.getElementById('resStatus');
+            const resContent = document.getElementById('resContent');
+
+            resRoll.textContent = "Roll: " + data.roll;
+            resStatus.className = "badge " + data.status;
+            resStatus.textContent = data.status.toUpperCase();
+
+            // Format content
+            let formattedHtml = "";
+            if (data.status === 'passed') {
+                // List GPAs line by line
+                // Example: gpa7: 2.80, gpa6: 2.86
+                formattedHtml = data.raw_text.replace(/,/g, '<br>'); 
+            } else if (data.status === 'referred' || data.status === 'failed') {
+                // Highlight text inside {} or specific keywords
+                // Naive approach: passed content is already clean, but for referred, we want to highlight 'ref_sub' or failed codes
+                // "gpa7: ref" -> highlight ref? 
+                
+                // Let's just create a list and highlight critical parts
+                let parts = data.raw_text.split(',').map(p => p.trim());
+                formattedHtml = parts.map(part => {
+                    if (part.includes('ref') || part.includes('(T)') || part.includes('(P)')) {
+                         return `<span class="highlight-ref">${part}</span>`;
+                    }
+                    return part;
+                }).join('<br>');
+            }
+
+            resContent.innerHTML = formattedHtml;
+            resultArea.style.display = "block";
+        }
+        
+        // Allow Enter key to search
+        document.getElementById('rollInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                searchResult();
+            }
+        });
+    </script>
+</body>
+</html>
